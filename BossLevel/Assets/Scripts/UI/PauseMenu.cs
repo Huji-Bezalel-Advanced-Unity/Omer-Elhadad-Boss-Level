@@ -46,7 +46,6 @@ public class PauseMenu : MonoBehaviour
         background.SetActive(false);
         Time.timeScale = 1f;
         
-        //gameCanvas.SetActive(true);
     }
     
 
@@ -64,6 +63,6 @@ public class PauseMenu : MonoBehaviour
     
     private async Task SettingsPanelOutro()
     {
-        await settingsPanelRect.DOAnchorPosY(bottomPosY, duration).SetEase(Ease.OutBack).SetUpdate(true).AsyncWaitForCompletion();
+        await settingsPanelRect.DOAnchorPosY(bottomPosY, duration).SetEase(Ease.InBack).SetUpdate(true).AsyncWaitForCompletion();
     }
 }
