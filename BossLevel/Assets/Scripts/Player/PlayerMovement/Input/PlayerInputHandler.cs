@@ -15,7 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
     private float _jumpInputStartTime;
     private float _dashInputStartTime;
 
-    private const float InputHoldTime = 0.1f; // Time to hold the jump input to register as a jump
+    private const float InputHoldTime = 0.01f; // Time to hold the jump input to register as a jump
     
     public bool DashInput { get; private set; }
 
@@ -42,27 +42,17 @@ public class PlayerInputHandler : MonoBehaviour
     
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            DashInput = true;
-            _dashInputStartTime = Time.time;
-        }
+        if (!context.started) return;
+        DashInput = true;
+        _dashInputStartTime = Time.time;
     }
 
     public void OnSwapInput(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            SwapInput = true;
-        }
+        if (!context.started) return;
+        SwapInput = true;
     }
     
-    
-    public void ResetDashInput() => DashInput = false;
-    public void ResetJumpInput() => JumpInput = false;
-    
-    public void ResetSwapInput() => SwapInput = false;
-
     private void CheckJumpInput()
     {
         if (Time.time - _jumpInputStartTime >= InputHoldTime)
@@ -78,6 +68,11 @@ public class PlayerInputHandler : MonoBehaviour
             DashInput = false;
         }
     }
+    
+    public void ResetDashInput() => DashInput = false;
+    public void ResetJumpInput() => JumpInput = false;
+    public void ResetSwapInput() => SwapInput = false;
+
     
     
 }

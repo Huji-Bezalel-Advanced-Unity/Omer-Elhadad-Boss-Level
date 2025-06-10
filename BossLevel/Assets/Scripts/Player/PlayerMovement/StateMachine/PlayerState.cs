@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerState
 {
-    protected Player Player;
+    protected PlayerController PlayerController;
     protected PlayerStateMachine StateMachine;
     protected PlayerData PlayerData;    
     protected bool IsAnimationFinished;
@@ -13,9 +13,9 @@ public class PlayerState
     
     private string _animBoolName;
     
-    public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
+    public PlayerState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
     {
-        Player = player;
+        PlayerController = playerController;
         StateMachine = stateMachine;
         PlayerData = playerData;
         _animBoolName = animBoolName;
@@ -25,7 +25,7 @@ public class PlayerState
     {
         DoChecks();
         
-        Player.PlayerAnimator.SetBool(_animBoolName, true);
+        PlayerController.PlayerAnimator.SetBool(_animBoolName, true);
         StartTime = Time.deltaTime;
         IsAnimationFinished = false;
         // Debug.Log($"Entering state: {this.GetType().Name}");
@@ -33,7 +33,7 @@ public class PlayerState
     
     public virtual void Exit()
     {
-        Player.PlayerAnimator.SetBool(_animBoolName, false);
+        PlayerController.PlayerAnimator.SetBool(_animBoolName, false);
     }
     
     public virtual void LogicUpdate()

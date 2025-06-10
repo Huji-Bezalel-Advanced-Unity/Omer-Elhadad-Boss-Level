@@ -5,7 +5,7 @@ public class PlayerMoveState : PlayerGroundedState
 {
     public static event Action PlayerMove; 
 
-    public PlayerMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerMoveState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -15,27 +15,20 @@ public class PlayerMoveState : PlayerGroundedState
         base.Enter();
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
     public override void LogicUpdate()
     {
         
         base.LogicUpdate();
-        
-        if (XInput == 0)
-        {
-            StateMachine.ChangeState(Player.IdleState);
-        }
-        Player.SetXVelocity(PlayerData.movementSpeed * XInput);
-        Player.CheckIfShouldFlip(XInput);
+        if (XInput != 0) return;
+        StateMachine.ChangeState(PlayerController.IdleState);
+        PlayerController.SetXVelocity(0f);
     }
 
     public override void PhysicsUpdate()
     {
+        PlayerController.SetXVelocity(PlayerData.movementSpeed * XInput);
+        PlayerController.CheckIfShouldFlip(XInput);
         base.PhysicsUpdate();
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
 }

@@ -3,60 +3,52 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerState
 {
-    private bool _isGrounded;
     private int _xInput;
     private bool _dashInput;
-    private bool _jumpInput;
     
     public static event Action PlayerInAir; 
 
-    public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerInAirState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
     
     public override void Enter()
     {
         PlayerInAir?.Invoke();
+        
         base.Enter();
-        Player.PlayerRigidbody.gravityScale = PlayerData.inAirGravityScale; // Set gravity scale when entering in-air state
-        DoChecks();
+        PlayerController.PlayerRigidbody.gravityScale = PlayerData.inAirGravityScale; // Set gravity scale when entering in-air state
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        _xInput = Player.InputHandler.NormalizedXInput;
-        _dashInput = Player.InputHandler.DashInput;
-        _jumpInput = Player.InputHandler.JumpInput;
         
-        if (_dashInput && !Player.DashState.IsDashCooldownActive())
-        {
-            Player.InputHandler.ResetDashInput();
-            StateMachine.ChangeState(Player.DashState);
-        }
+        _xInput = PlayerController.InputHandler.NormalizedXInput;
+        _dashInput = PlayerController.InputHandler.DashInput;
         
-        else if (_isGrounded && Player.CurrentVelocity.y < 0.01f)
+        if (_dashInput && PlayerController.DashState.CanDash())
         {
-            StateMachine.ChangeState(Player.LandState);
+            PlayerController.InputHandler.ResetDashInput();
+            StateMachine.ChangeState(PlayerController.DashState);
         }
-
-        else
+        else if (PlayerController.CheckIfGrounded())
         {
-            Player.CheckIfShouldFlip(_xInput);
-            Player.SetXVelocity(PlayerData.movementSpeed * _xInput);
+            PlayerController.StateMachine.ChangeState(PlayerController.IdleState);
         }
-        
     }
-    public override void DoChecks()
+    
+    public override void PhysicsUpdate()
     {
-        base.DoChecks();
-        _isGrounded = Player.CheckIfGrounded();
+        base.PhysicsUpdate();
+        
+        PlayerController.SetXVelocity(PlayerData.movementSpeed * _xInput);
+        PlayerController.CheckIfShouldFlip(_xInput);
     }
-
+    
     public override void Exit()
     {
         base.Exit();
-        Player.PlayerRigidbody.gravityScale = PlayerData.baseGravityScale; // Reset gravity scale when exiting in-air state
+        PlayerController.PlayerRigidbody.gravityScale = PlayerData.baseGravityScale; // Reset gravity scale when exiting in-air state
     }
 }

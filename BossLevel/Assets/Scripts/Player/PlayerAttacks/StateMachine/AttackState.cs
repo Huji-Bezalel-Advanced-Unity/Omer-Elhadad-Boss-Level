@@ -7,35 +7,33 @@ public class AttackState
 
     protected AttackContainer Container;
     protected AttackStateMachine StateMachine;
-    protected bool IsAnimationFinished;
     protected AttackData PlayerAttackData;
     protected float StartTime;
-    
-    private bool _canPlayOtherAnims = false;
+    protected RuntimeAnimatorController AnimatorController;
+    private bool _canPlayOtherAnims;
 
-    
     private string _animBoolName;
     
-    public AttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName)
+    public AttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName, RuntimeAnimatorController stateAnimatorController)
     {
         StateMachine = stateMachine;
         _animBoolName = animBoolName;
         PlayerAttackData = attackData;
         Container = container;
+        AnimatorController = stateAnimatorController;
     }
     
     public virtual void Enter()
     {
-
-        // Trigger the attack animation
-        
+        Container.AttackAnimator.runtimeAnimatorController = AnimatorController;
+        // Trigger the attack ani   mation
 
         DoChecks();
+        
         _canPlayOtherAnims = false;
         Debug.Log("Entering AttackState");
-        Container.AttackAnimator.Play($"smallToLargeTransform");
+        Container.AttackAnimator.Play($"transform");
         Debug.Log("Attack animation started");
-        IsAnimationFinished = false;
         
         PlayerMoveState.PlayerMove += OnPlayerMove;
         PlayerIdleState.PlayerIdle += OnPlayerIdle;
@@ -46,47 +44,52 @@ public class AttackState
     }
 
 
-    protected virtual void OnPlayerIdle()
+    public virtual void OnPlayerIdle()
     {
         if (_canPlayOtherAnims)
             Container.AttackAnimator.Play($"idle");
     }
 
-    protected virtual void OnPlayerMove()
+    public virtual void OnPlayerMove()
+    {
+        if (_canPlayOtherAnims)
+            Container.AttackAnimator.Play($"idle");
+        
+    }
+
+    public virtual void OnPlayerJump()
     {
         if (_canPlayOtherAnims)
         {
-            Container.AttackAnimator.Play($"move");
+            Debug.Log("Playing jump animation");
+            Container.AttackAnimator.Play($"jump");
         }
     }
 
-    protected virtual void OnPlayerJump()
-    {
-        if (_canPlayOtherAnims)
-            Container.AttackAnimator.Play($"jump");
-    }
-
-    protected virtual void OnPlayerInAir()
+    public virtual void OnPlayerInAir()
     {
         if (_canPlayOtherAnims)
             Container.AttackAnimator.Play($"fall");
     }
 
-    protected virtual void OnPlayerDash()
+    public virtual void OnPlayerDash()
     {
+        Debug.Log("Playing dash animation");
+        // Ensure that the dash animation is played only if allowed
+        Debug.Log($"Can play other anims: {_canPlayOtherAnims}");
         if (_canPlayOtherAnims)
             Container.AttackAnimator.Play($"dash");
     }
 
     public virtual void AnimationFinishTrigger()
     {
-        IsAnimationFinished = true;
         _canPlayOtherAnims = true;
+        Container.AttackAnimator.Play($"idle");
     }
 
     public virtual void Exit()
     {
-        Container.AttackAnimator.SetBool(_animBoolName, false);
+        _canPlayOtherAnims = false;
         PlayerMoveState.PlayerMove -= OnPlayerMove;
         PlayerIdleState.PlayerIdle -= OnPlayerIdle;
         PlayerJumpState.PlayerJump -= OnPlayerJump;

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Project
   m_RootView: {fileID: 5}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 150}
   m_MaxSize: {x: 32384, y: 24288}
   vertical: 0
-  controlID: 198
+  controlID: 143
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 150}
   m_MaxSize: {x: 24288, y: 24288}
   vertical: 1
-  controlID: 119
+  controlID: 144
   draggingID: 0
 --- !u!114 &10
 MonoBehaviour:
@@ -656,14 +656,14 @@ MonoBehaviour:
     - {fileID: 8097921126102845948, guid: 5d33bc1440a8f5b45b362e4353161728, type: 2}
     - {fileID: -1653061014402955920, guid: 83cbc02dd15ce0741bc2dd219252dc60, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.6412941
+    - e00: 0.58518517
       e01: 0
       e02: 0
-      e03: -71.66467
+      e03: -14.259247
       e10: 0
-      e11: 0.6412941
+      e11: 0.58518517
       e12: 0
-      e13: 29.635635
+      e13: 55.45926
       e20: 0
       e21: 0
       e22: 1
@@ -1432,7 +1432,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Player/PlayerMovement/Data
+    - Assets/Materials
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1442,15 +1442,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 82
   m_LastFolders:
-  - Assets/Scripts/Player/PlayerMovement/Data
+  - Assets/Materials
   m_LastFoldersGridSize: 82
   m_LastProjectPath: C:\Git\BossLevel\Omer-Elhadad-Boss-Level\BossLevel
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 330}
-    m_SelectedIDs: aab20000
-    m_LastClickedID: 45738
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 9ab20000
+    m_LastClickedID: 45722
     m_ExpandedIDs: 0000000088b000008ab000008cb000008eb0000090b0000092b0000094b0000096b0000098b000009ab000009cb000009eb00000a0b00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300000a1001000e0e0100460b0100baaf0000a0af0000701801008a180100bcad0000f8bd0000fabd00008809010094090100aa090100700c010070b0000022b3000066b30000a2b500000ab600002ebb0000f4bb00002cba00007cb6000054b900006ab9000066b900004ab90000aed500007ad900008ebc000068dc0100f0bd00002cbe0000da81020014cb000056340100c6c0000002d4000008d40000000000008089ffff4e7affff6cea000078b40000d8b3000082b40000fab600008ec6000022b40000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1621,7 +1621,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 44844
+  m_LastSelectedObjectID: 44900
 --- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52

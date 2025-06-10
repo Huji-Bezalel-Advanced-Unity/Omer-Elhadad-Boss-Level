@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    public bool CanDoubleJump { get; private set; } = true;
-    
     public static event Action PlayerJump; 
 
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerJumpState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -17,18 +15,21 @@ public class PlayerJumpState : PlayerAbilityState
         PlayerJump?.Invoke();
         
         base.Enter();
-        Player.SetYVelocity(PlayerData.jumpSpeed);
+        PlayerController.PlayerRigidbody.gravityScale = PlayerData.baseGravityScale; // Set gravity scale for jump
+        
+        PlayerController.SetYVelocity(PlayerData.jumpSpeed);
         IsAbilityDone = true;
     }
     
     public override void LogicUpdate()
     {
-        if (!(Player.CurrentVelocity.y < 0)) return;
+        if (PlayerController.InputHandler.DashInput && PlayerController.DashState.CanDash())
+        {
+            PlayerController.InputHandler.ResetDashInput();
+            StateMachine.ChangeState(PlayerController.DashState);
+        }
+        
+        if (!(PlayerController.CurrentVelocity.y < 0)) return;
         base.LogicUpdate();
     }
-    
-    
-
-    public void PreformDoubleJump() => CanDoubleJump = false;
-    public void ResetDoubleJump() => CanDoubleJump = true;
 }

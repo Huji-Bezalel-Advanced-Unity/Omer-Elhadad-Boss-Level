@@ -2,12 +2,8 @@ using UnityEngine;
 
 public class PlayerAbilityState : PlayerState
 {
-    protected int XInput;
-    protected bool IsDashing;
-
     protected bool IsAbilityDone;
-    private bool _isGrounded;
-    public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerAbilityState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -17,20 +13,18 @@ public class PlayerAbilityState : PlayerState
         IsAbilityDone = false;
     }
     
-
-    // ReSharper disable Unity.PerformanceAnalysis
     public override void LogicUpdate()
     {
         base.LogicUpdate();
         if (!IsAbilityDone) return;
-        XInput = Player.InputHandler.NormalizedXInput;
-        Debug.Log(_isGrounded);
-        if (!Player.CheckIfGrounded() && Player.CurrentVelocity.y < 0.01f)
+        
+        if (!PlayerController.CheckIfGrounded())
         {
-            StateMachine.ChangeState(Player.InAirState);
+            StateMachine.ChangeState(PlayerController.InAirState);
         }
-        else{
-            StateMachine.ChangeState(Player.LandState);
+        else
+        {
+            StateMachine.ChangeState(PlayerController.IdleState);
         }
         
     }
@@ -40,12 +34,4 @@ public class PlayerAbilityState : PlayerState
         base.Exit();
         IsAbilityDone = true;
     }
-    
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        _isGrounded = Player.CheckIfGrounded();
-    }
-    
 }

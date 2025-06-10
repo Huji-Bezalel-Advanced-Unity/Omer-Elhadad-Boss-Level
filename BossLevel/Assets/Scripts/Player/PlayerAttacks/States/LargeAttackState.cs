@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class LargeAttackState : AttackState
 {
-    public LargeAttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName) : 
-        base(container, stateMachine, attackData, animBoolName)
+    public LargeAttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName, RuntimeAnimatorController stateAnimatorController) : 
+        base(container, stateMachine, attackData, animBoolName, stateAnimatorController)
     {
     }
     
@@ -16,8 +16,9 @@ public class LargeAttackState : AttackState
 
     public override void LogicUpdate()
     {
-        base.LogicUpdate();
-        
+        if (!Container.InputHandler.SwapInput) return;
+        Container.InputHandler.ResetSwapInput();
+        StateMachine.ChangeState(Container.SmallAttackState);
     }
 
     public override void Exit()

@@ -115,10 +115,10 @@ TextureImporter:
       name: largeDash_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 45
-        width: 17
-        height: 17
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,10 +137,10 @@ TextureImporter:
       name: largeDash_1
       rect:
         serializedVersion: 2
-        x: 82
-        y: 46
-        width: 21
-        height: 16
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,10 +159,10 @@ TextureImporter:
       name: largeDash_2
       rect:
         serializedVersion: 2
-        x: 141
-        y: 46
-        width: 25
-        height: 15
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,10 +181,10 @@ TextureImporter:
       name: largeDash_3
       rect:
         serializedVersion: 2
-        x: 206
-        y: 46
-        width: 24
-        height: 16
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,10 +203,10 @@ TextureImporter:
       name: largeDash_4
       rect:
         serializedVersion: 2
-        x: 273
-        y: 47
-        width: 22
-        height: 14
+        x: 256
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b9a5262072178e04f9c40ee9f4ad1873
     internalID: 0
     vertices: []
     indices: 

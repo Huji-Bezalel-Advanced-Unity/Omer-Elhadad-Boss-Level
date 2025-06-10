@@ -3,11 +3,10 @@ using UnityEngine;
 public class PlayerGroundedState : PlayerState
 {
     protected int XInput;
-    protected bool IsGrounded;
     private bool _jumpInput;
     private bool _dashInput;
     
-    public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerGroundedState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
     
@@ -15,7 +14,7 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Player.JumpState.ResetDoubleJump();
+        PlayerController.PlayerRigidbody.gravityScale = PlayerData.baseGravityScale; // Reset gravity scale when entering grounded state
     }
     
 
@@ -23,40 +22,21 @@ public class PlayerGroundedState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        
-        XInput = Player.InputHandler.NormalizedXInput;
-        _dashInput = Player.InputHandler.DashInput;
-        _jumpInput = Player.InputHandler.JumpInput;
 
-        if (_jumpInput && IsGrounded)
-        {
-            Player.InputHandler.ResetJumpInput();
-            StateMachine.ChangeState(Player.JumpState);
-        }
-        
-        else if (_dashInput && !Player.DashState.IsDashCooldownActive())
-        {
-            Player.InputHandler.ResetDashInput();
-            StateMachine.ChangeState(Player.DashState);
-        }
-        
-        else if (!IsGrounded)
-        {
-            StateMachine.ChangeState(Player.InAirState);
-        }
-        
-    }
+        XInput = PlayerController.InputHandler.NormalizedXInput;
+        _dashInput = PlayerController.InputHandler.DashInput;
+        _jumpInput = PlayerController.InputHandler.JumpInput;
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
+        if (_jumpInput && PlayerController.CheckIfGrounded())
+        {
+            PlayerController.InputHandler.ResetJumpInput();
+            StateMachine.ChangeState(PlayerController.JumpState);
+        }
+
+        else if (_dashInput && PlayerController.DashState.CanDash())
+        {
+            PlayerController.InputHandler.ResetDashInput();
+            StateMachine.ChangeState(PlayerController.DashState);
+        }
     }
-    
-    public override void DoChecks()
-    {
-        base.DoChecks();
-        // Add any grounded checks here if needed
-        IsGrounded = Player.CheckIfGrounded();
-    }
-    
 }

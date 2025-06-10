@@ -15,14 +15,14 @@ public class AttackContainer : MonoBehaviour
     
     #endregion
 
-    [SerializeField] private Player player;
+    [SerializeField] private PlayerController playerController;
     
     public Animator AttackAnimator { get; private set; }
     
     [SerializeField] private RuntimeAnimatorController smallAttackAnimatorController;
     [SerializeField] private RuntimeAnimatorController largeAttackAnimatorController;
 
-    //public PlayerInputHandler InputHandler { get; private set; }
+    public PlayerInputHandler InputHandler { get; private set; }
     
     [SerializeField] private AttackData attackData;
     
@@ -30,36 +30,29 @@ public class AttackContainer : MonoBehaviour
     
     private void Awake()
     {
+       
+        AttackAnimator = GetComponent<Animator>();
         StateMachine = new AttackStateMachine();
+        SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform", smallAttackAnimatorController);
+        LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform", largeAttackAnimatorController);
+        
         // Initialize states here, similar to PlayerStateMachine
-        SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform");
-        LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform");
+
     }
     
     private void Start()
     {
-        AttackAnimator = GetComponent<Animator>();
-        AttackAnimator.runtimeAnimatorController = smallAttackAnimatorController;
         StateMachine.Initialize(SmallAttackState);
+        InputHandler = playerController.InputHandler;
+        if (InputHandler == null )
+        {
+            Debug.LogError("InputHandler is not assigned in AttackContainer.");
+        }
     }
 
     private void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
-        if (!player.InputHandler.SwapInput) return;
-        // Swap to the next attack state
-            
-        player.InputHandler.ResetSwapInput();
-        if (StateMachine.CurrentState is SmallAttackState)
-        {
-            AttackAnimator.runtimeAnimatorController = largeAttackAnimatorController;
-            StateMachine.ChangeState(LargeAttackState);
-        }
-        else if (StateMachine.CurrentState is LargeAttackState)
-        {
-            AttackAnimator.runtimeAnimatorController = smallAttackAnimatorController;
-            StateMachine.ChangeState(SmallAttackState);
-        }
     }
     
     private void FixedUpdate()

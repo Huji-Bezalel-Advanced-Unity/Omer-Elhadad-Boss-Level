@@ -4,13 +4,15 @@ using UnityEngine;
 public class PlayerDashState : PlayerAbilityState
 {
     private float _originalGravityScale;
-    private float _lastDashTime;
+
     // add event that player is dashing
     
     public static event Action PlayerDash;
+    
+    private float _lastDashTime;
 
-    public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
-        : base(player, stateMachine, playerData, animBoolName)
+    public PlayerDashState(PlayerController playerController, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
+        : base(playerController, stateMachine, playerData, animBoolName)
     {
     }
 
@@ -18,42 +20,41 @@ public class PlayerDashState : PlayerAbilityState
     {
         // Trigger the dash event
         PlayerDash?.Invoke();
+        PlayerController.InputHandler.ResetDashInput();
+        _originalGravityScale = PlayerController.PlayerRigidbody.gravityScale;
+        PlayerController.PlayerRigidbody.gravityScale = 0f; // Disable gravity during dash
         base.Enter();
-        _originalGravityScale = Player.PlayerRigidbody.gravityScale;
-        Player.PlayerRigidbody.gravityScale = 0f; // Disable gravity during dash
     }
     
     
-
-    public override void LogicUpdate()
-    {
-    }
+    //
+    // public override void LogicUpdate()
+    // {
+    //     if (Player.CheckIfGrounded())
+    //         StateMachine.ChangeState(Player.IdleState);
+    //     else
+    //         StateMachine.ChangeState(Player.InAirState);
+    // }
     
     public override void PhysicsUpdate()
     {
-        // base.PhysicsUpdate();
-        //
-        // // Check if the dash duration has elapsed
-        // if (IsAnimationFinished)
-        // {
-        //     EndDash();
-        // }
-            
-        var dashVelocity = new Vector2(PlayerData.dashSpeed * Player.FacingDirection, 0f);
-        Player.PlayerRigidbody.linearVelocity = dashVelocity;
+        var dashVelocity = new Vector2(PlayerData.dashSpeed * PlayerController.FacingDirection, 0f);
+        PlayerController.PlayerRigidbody.linearVelocity = dashVelocity;
 
         if (!IsAnimationFinished) return;
             
-        var currentVel = Player.PlayerRigidbody.linearVelocity;
-        Player.PlayerRigidbody.linearVelocity = new Vector2(0f, currentVel.y);
+        var currentVel = PlayerController.PlayerRigidbody.linearVelocity;
+        PlayerController.PlayerRigidbody.linearVelocity = new Vector2(0f, currentVel.y);
+        IsAbilityDone = true;
+        
+    }
+    
+    public override void Exit()
+    {
+        base.Exit();
+        PlayerController.PlayerRigidbody.gravityScale = _originalGravityScale; // Reset gravity scale after dash
         _lastDashTime = Time.time;
-        Player.PlayerRigidbody.gravityScale = _originalGravityScale; // Reset gravity scale after dash
-
-        if (Player.CheckIfGrounded())
-            StateMachine.ChangeState(Player.IdleState);
-        else
-            StateMachine.ChangeState(Player.InAirState);
     }
 
-    public bool IsDashCooldownActive() => Time.time - _lastDashTime < PlayerData.dashCooldown;
+    public bool CanDash() => _lastDashTime + PlayerData.dashCooldown <= Time.time;
 }
