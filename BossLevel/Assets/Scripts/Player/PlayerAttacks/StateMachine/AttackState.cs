@@ -10,7 +10,8 @@ public class AttackState
     protected AttackData PlayerAttackData;
     protected float StartTime;
     protected RuntimeAnimatorController AnimatorController;
-    private bool _canPlayOtherAnims;
+    protected bool CanPlayOtherAnims;
+    protected bool ShootFlag;
 
     private string _animBoolName;
     
@@ -26,14 +27,12 @@ public class AttackState
     public virtual void Enter()
     {
         Container.AttackAnimator.runtimeAnimatorController = AnimatorController;
-        // Trigger the attack ani   mation
+        // Trigger the attack animation
 
         DoChecks();
         
-        _canPlayOtherAnims = false;
-        Debug.Log("Entering AttackState");
+        CanPlayOtherAnims = false;
         Container.AttackAnimator.Play($"transform");
-        Debug.Log("Attack animation started");
         
         PlayerMoveState.PlayerMove += OnPlayerMove;
         PlayerIdleState.PlayerIdle += OnPlayerIdle;
@@ -42,65 +41,78 @@ public class AttackState
         PlayerDashState.PlayerDash += OnPlayerDash;
         
     }
+    
 
-
-    public virtual void OnPlayerIdle()
+    protected virtual void OnPlayerIdle()
     {
-        if (_canPlayOtherAnims)
+        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
             Container.AttackAnimator.Play($"idle");
     }
 
-    public virtual void OnPlayerMove()
+    protected virtual void OnPlayerMove()
     {
-        if (_canPlayOtherAnims)
+        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
             Container.AttackAnimator.Play($"idle");
         
     }
 
-    public virtual void OnPlayerJump()
+    protected virtual void OnPlayerJump()
     {
-        if (_canPlayOtherAnims)
+        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
         {
             Debug.Log("Playing jump animation");
             Container.AttackAnimator.Play($"jump");
         }
     }
 
-    public virtual void OnPlayerInAir()
+    protected virtual void OnPlayerInAir()
     {
-        if (_canPlayOtherAnims)
+        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
             Container.AttackAnimator.Play($"fall");
     }
 
-    public virtual void OnPlayerDash()
+    protected virtual void OnPlayerDash()
     {
-        Debug.Log("Playing dash animation");
-        // Ensure that the dash animation is played only if allowed
-        Debug.Log($"Can play other anims: {_canPlayOtherAnims}");
-        if (_canPlayOtherAnims)
+        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
             Container.AttackAnimator.Play($"dash");
     }
 
     public virtual void AnimationFinishTrigger()
     {
-        _canPlayOtherAnims = true;
+        CanPlayOtherAnims = true;
         Container.AttackAnimator.Play($"idle");
     }
 
     public virtual void Exit()
     {
-        _canPlayOtherAnims = false;
+        CanPlayOtherAnims = false;
         PlayerMoveState.PlayerMove -= OnPlayerMove;
         PlayerIdleState.PlayerIdle -= OnPlayerIdle;
         PlayerJumpState.PlayerJump -= OnPlayerJump;
         PlayerInAirState.PlayerInAir -= OnPlayerInAir;
         PlayerDashState.PlayerDash -= OnPlayerDash;
     }
+
+    protected void ActivateShooting()
+    {
+        var stateInfo = Container.AttackAnimator.GetCurrentAnimatorStateInfo(0);
+        if (!stateInfo.IsName("shoot"))
+        {
+            Container.AttackAnimator.Play($"shoot");
+            ShootFlag = true;
+        }
+    }
     
     public virtual void LogicUpdate()
     {
-        DoChecks();
-        // Logic to update the state
+        if (Container.InputHandler.ShootInput)
+            ActivateShooting();
+        else if (CanPlayOtherAnims && ShootFlag)
+        {
+            Container.AttackAnimator.Play("idle");
+            ShootFlag = false;
+        }
+        
     }
     
     public virtual void PhysicsUpdate()
@@ -109,7 +121,7 @@ public class AttackState
         // Physics-related updates for the state
     }
     
-    public virtual void DoChecks()
+    protected virtual void DoChecks()
     {
         // Perform checks relevant to the state
     }

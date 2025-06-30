@@ -7,26 +7,12 @@ public class LargeAttackState : AttackState
     {
     }
     
-    public override void Enter()
-    {
-        base.Enter();
-        // Additional logic specific to SmallAttackState can be added here
-        Debug.Log("Entering SmallAttackState");
-    }
-
     public override void LogicUpdate()
     {
-        if (!Container.InputHandler.SwapInput) return;
+        base.LogicUpdate();
+        if (!Container.InputHandler.SwapInput || Container.InputHandler.ShootInput) return;
         Container.InputHandler.ResetSwapInput();
         StateMachine.ChangeState(Container.SmallAttackState);
     }
-
-    public override void Exit()
-    {
-        base.Exit();
-        // Additional logic specific to SmallAttackState can be added here
-        Debug.Log("Exiting SmallAttackState");
-    }
-    
     
 }

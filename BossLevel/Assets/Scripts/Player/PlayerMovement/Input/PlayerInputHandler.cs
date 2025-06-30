@@ -12,6 +12,8 @@ public class PlayerInputHandler : MonoBehaviour
     
     public bool SwapInput { get; private set; }
     
+    public bool ShootInput { get; private set; }
+    
     private float _jumpInputStartTime;
     private float _dashInputStartTime;
 
@@ -51,6 +53,18 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (!context.started) return;
         SwapInput = true;
+    }
+    
+    public void OnShootInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ShootInput = true;
+        }
+        else if (context.canceled)
+        {
+            ShootInput = false;
+        }
     }
     
     private void CheckJumpInput()
