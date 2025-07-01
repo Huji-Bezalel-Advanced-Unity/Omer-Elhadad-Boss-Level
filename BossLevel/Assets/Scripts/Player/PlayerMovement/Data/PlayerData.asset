@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1547a1121835c24baac3af210a1910d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  movementSpeed: 14
+  movementSpeed: 10
   jumpSpeed: 25
   baseGravityScale: 10
   groundCheckRadius: 0.13
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  dashSpeed: 20
+  dashSpeed: 15
   dashCooldown: 0.1
   inAirGravityScale: 3
