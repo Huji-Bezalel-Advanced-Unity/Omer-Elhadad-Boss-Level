@@ -108,7 +108,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
+                    "name": "WASD",
                     "id": "f5ab31a1-d3db-447c-b8c5-cbbe2ea1e39a",
                     "path": "<Keyboard>/space",
                     "interactions": "",

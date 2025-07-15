@@ -12,16 +12,18 @@ public class AttackState
     protected RuntimeAnimatorController AnimatorController;
     protected bool CanPlayOtherAnims;
     protected bool ShootFlag;
+    protected Transform[] SpawnPoints;
 
     private string _animBoolName;
     
-    public AttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName, RuntimeAnimatorController stateAnimatorController)
+    public AttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName, RuntimeAnimatorController stateAnimatorController, Transform[] spawnPoints)
     {
         StateMachine = stateMachine;
         _animBoolName = animBoolName;
         PlayerAttackData = attackData;
         Container = container;
         AnimatorController = stateAnimatorController;
+        SpawnPoints = spawnPoints;
     }
     
     public virtual void Enter()

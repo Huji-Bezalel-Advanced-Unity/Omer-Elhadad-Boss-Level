@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Destroyer
+  - Enemy Hitbox
+  - Large Projectile
+  - Small Projectile
   layers:
   - Default
   - TransparentFX

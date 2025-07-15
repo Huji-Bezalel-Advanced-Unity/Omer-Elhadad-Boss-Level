@@ -20,7 +20,10 @@ public class AttackContainer : MonoBehaviour
     public Animator AttackAnimator { get; private set; }
     
     [SerializeField] private RuntimeAnimatorController smallAttackAnimatorController;
+    [SerializeField] private Transform[] smallAttackSpawnPoints;
+    
     [SerializeField] private RuntimeAnimatorController largeAttackAnimatorController;
+    [SerializeField] private Transform[] largeAttackSpawnPoints;
 
     public PlayerInputHandler InputHandler { get; private set; }
     
@@ -33,8 +36,8 @@ public class AttackContainer : MonoBehaviour
        
         AttackAnimator = GetComponent<Animator>();
         StateMachine = new AttackStateMachine();
-        SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform", smallAttackAnimatorController);
-        LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform", largeAttackAnimatorController);
+        SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform", smallAttackAnimatorController, smallAttackSpawnPoints);
+        LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform", largeAttackAnimatorController, largeAttackSpawnPoints);
         
         // Initialize states here, similar to PlayerStateMachine
 
