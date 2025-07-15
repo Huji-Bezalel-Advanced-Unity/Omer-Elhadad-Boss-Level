@@ -1,0 +1,48 @@
+using UnityEngine;
+
+public class HealthManager : MonoBehaviour
+{
+    [Header("Health Settings")]
+    [SerializeField] private float maxHealth = 100f;
+    [SerializeField] private DamageFlash damageFlash;
+    
+    public float CurrentHealth { get; private set; }
+    
+    private void Start()
+    {
+        // Initialize current health to max health at the start
+        CurrentHealth = maxHealth;
+    }
+    
+    public void TakeDamage(float damage)
+    {
+        // Reduce current health by damage amount
+        CurrentHealth -= damage;
+
+        // Ensure current health does not drop below zero
+        if (CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
+
+        // Trigger flash effect to indicate damage taken
+        if (damageFlash != null)
+        {
+            damageFlash.CallDamageFlash();
+        }
+
+        // Check if health has reached zero
+        if (CurrentHealth <= 0)
+        {
+            OnDeath();
+        }
+    }
+    
+    private void OnDeath()
+    {
+        // Handle death logic here, e.g., play death animation, disable character, etc.
+        //Debug.Log("Character has died.");
+        // You can also trigger any death-related events or animations here.
+    }
+    
+}
