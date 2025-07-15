@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2492246803222629359}
   m_Layer: 0
   m_Name: LargeProjectiles_0
-  m_TagString: Projectile
+  m_TagString: Large Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

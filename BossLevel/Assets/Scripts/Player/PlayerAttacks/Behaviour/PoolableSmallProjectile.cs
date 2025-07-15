@@ -4,7 +4,7 @@ public class PoolableSmallProjectile : MonoBehaviour, IPoolable
 {
     private static readonly int Hit = Animator.StringToHash("Hit");
     [SerializeField] private float projectileSpeed;
-    public float ProjectileDamage { get; private set; } = 1f;
+    public float ProjectileDamage { get; private set; } = 0.5f;
     
 
     private Rigidbody2D _rigidbody2D;

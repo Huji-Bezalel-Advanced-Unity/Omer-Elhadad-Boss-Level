@@ -1,31 +1,33 @@
+// File: Assets/Scripts/Boss/First Stage/CrackHandler.cs
 using System;
 using UnityEngine;
 
 public class CrackHandler : MonoBehaviour
 {
+    private static readonly int FirstCrack = Animator.StringToHash("FirstCrack");
+    private static readonly int SecondCrack = Animator.StringToHash("SecondCrack");
     [SerializeField] private HealthManager bossHealthManager;
     [SerializeField] private Animator crackAnimator;
-    
+
     public static event Action FirstCrackEvent;
     public static event Action SecondCrackEvent;
-    public static event Action ThirdCrackEvent;
+
+    private bool _firstCrackTriggered;
+    private bool _secondCrackTriggered;
 
     private void Update()
     {
-        if (bossHealthManager.CurrentHealth <= 75f && bossHealthManager.CurrentHealth > 50f)
+        if (!_firstCrackTriggered && bossHealthManager.CurrentHealth <= 75f && bossHealthManager.CurrentHealth > 50f)
         {
             FirstCrackEvent?.Invoke();
-            crackAnimator.SetTrigger("FirstCrack");
+            crackAnimator.SetTrigger(FirstCrack);
+            _firstCrackTriggered = true;
         }
-        else if (bossHealthManager.CurrentHealth <= 50f && bossHealthManager.CurrentHealth > 25f)
+        else if (!_secondCrackTriggered && bossHealthManager.CurrentHealth <= 50f && bossHealthManager.CurrentHealth > 25f)
         {
             SecondCrackEvent?.Invoke();
-            crackAnimator.SetTrigger("SecondCrack");
-        }
-        else if (bossHealthManager.CurrentHealth <= 25f && bossHealthManager.CurrentHealth > 0f)
-        {
-            ThirdCrackEvent?.Invoke();
-            crackAnimator.SetTrigger("ThirdCrack");
+            crackAnimator.SetTrigger(SecondCrack);
+            _secondCrackTriggered = true;
         }
     }
 }

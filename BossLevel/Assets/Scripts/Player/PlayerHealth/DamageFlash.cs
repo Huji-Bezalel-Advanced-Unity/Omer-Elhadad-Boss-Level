@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -21,7 +22,20 @@ public class DamageFlash : MonoBehaviour
             _originalMaterial = _spriteRenderer.material;
         }
     }
-    
+
+    private void OnEnable()
+    {
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = _originalColor; // Reset color when enabled
+        }
+        
+        if (_originalMaterial != null)
+        {
+            _originalMaterial.SetFloat(FlashAmount, 0f); // Reset flash amount
+        }
+    }
+
     public void CallDamageFlash()
     {
         _damageFlashCoroutine = StartCoroutine(DamageFlasher());

@@ -10,13 +10,25 @@ public class IdleBehaviour : StateMachineBehaviour
 
     private float _idleTimer = 1f;
     private BossStateAction _randomAction;
+    private int _currentCrack = 2;
+
+    private void Awake()
+    {
+        CrackHandler.FirstCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
+        CrackHandler.SecondCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
+    }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        CrackHandler.FirstCrackEvent += UpdateCrack;
+        
+        _currentCrack = Mathf.Clamp(_currentCrack, 2, 4);
         _idleTimer = Random.Range(0.8f, 2f);
         var values = (BossStateAction[])System.Enum.GetValues(typeof(BossStateAction));
-        _randomAction = values[Random.Range(0, values.Length)];
+        Debug.Log("Current Crack: " + _currentCrack);
+        _randomAction = values[Random.Range(0, _currentCrack)];
     }
+
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -41,6 +53,11 @@ public class IdleBehaviour : StateMachineBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
+    
+    private void UpdateCrack()
+    {
+        _currentCrack += 1;
+    }
     private enum BossStateAction
     {
         Move,
@@ -48,4 +65,6 @@ public class IdleBehaviour : StateMachineBehaviour
         Fire,
         Water
     }
+    
+    
 }

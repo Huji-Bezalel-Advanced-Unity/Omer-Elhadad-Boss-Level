@@ -47,10 +47,6 @@ public class AttackContainer : MonoBehaviour
     {
         StateMachine.Initialize(SmallAttackState);
         InputHandler = playerController.InputHandler;
-        if (InputHandler == null )
-        {
-            Debug.LogError("InputHandler is not assigned in AttackContainer.");
-        }
     }
 
     private void Update()

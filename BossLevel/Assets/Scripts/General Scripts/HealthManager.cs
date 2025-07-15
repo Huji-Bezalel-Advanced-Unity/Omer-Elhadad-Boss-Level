@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
@@ -7,13 +8,12 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private DamageFlash damageFlash;
     
     public float CurrentHealth { get; private set; }
-    
-    private void Start()
+
+    private void OnEnable()
     {
-        // Initialize current health to max health at the start
         CurrentHealth = maxHealth;
     }
-    
+
     public void TakeDamage(float damage)
     {
         // Reduce current health by damage amount
