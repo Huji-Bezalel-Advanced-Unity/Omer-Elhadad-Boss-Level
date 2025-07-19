@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1102 &-4092017807012604407
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Death
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: c4596cf811a188340a8c731ca892f16e, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-3546244980068101921
 AnimatorState:
   serializedVersion: 6
@@ -79,12 +105,18 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -222328273860670542}
     m_Position: {x: 370, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4092017807012604407}
+    m_Position: {x: 370, y: 360, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1390309576943210730}
+    m_Position: {x: 370, y: 440, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 180, y: 0, z: 0}
+  m_AnyStatePosition: {x: 150, y: 0, z: 0}
   m_EntryPosition: {x: 150, y: 60, z: 0}
   m_ExitPosition: {x: 630, y: 60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -158,6 +190,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 2ded1279f946b024ea3cf016f630f228, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &1390309576943210730
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DeathLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 40fad903a7a1d4948a24d73e5b5b6d4a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

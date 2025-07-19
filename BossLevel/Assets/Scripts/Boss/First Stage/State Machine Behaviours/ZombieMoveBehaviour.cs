@@ -32,8 +32,4 @@ public class ZombieMoveBehaviour : StateMachineBehaviour
         animator.transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
 }

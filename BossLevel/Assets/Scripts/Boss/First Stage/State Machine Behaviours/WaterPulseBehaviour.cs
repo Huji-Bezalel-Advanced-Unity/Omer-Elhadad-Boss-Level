@@ -1,21 +1,27 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WaterPulseBehaviour : StateMachineBehaviour
 {
-    [SerializeField] private GameObject[] leftAndRightWaterPulses;
-    private GameObject _randomWaterPulse;
+    private static readonly int Idle = Animator.StringToHash("Idle");
+    public enum WaterPulseSide
+    {
+        Left,
+        Right
+    }
+
+    public static event Action<WaterPulseSide> WaterPulseActivated;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetTrigger("Idle");
+        animator.SetTrigger(Idle);
     }
-    
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var randomIndex = Random.Range(0, leftAndRightWaterPulses.Length);
-        _randomWaterPulse = Instantiate(leftAndRightWaterPulses[randomIndex],
-            leftAndRightWaterPulses[randomIndex].transform.position,
-            leftAndRightWaterPulses[randomIndex].transform.rotation);       
-        _randomWaterPulse.SetActive(true);
+        animator.gameObject.SetActive(true);
+        var randomSide = (WaterPulseSide)Random.Range(0, Enum.GetValues(typeof(WaterPulseSide)).Length);
+        WaterPulseActivated?.Invoke(randomSide);
     }
 }

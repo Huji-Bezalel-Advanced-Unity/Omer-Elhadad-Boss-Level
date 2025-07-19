@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HitboxLogic : MonoBehaviour
+public class EnemyHitboxLogic : MonoBehaviour
 {
     [SerializeField] private HealthManager healthManager;
     private void OnTriggerEnter2D(Collider2D other)

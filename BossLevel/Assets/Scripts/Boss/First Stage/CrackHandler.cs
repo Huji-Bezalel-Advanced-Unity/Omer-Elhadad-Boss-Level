@@ -6,14 +6,18 @@ public class CrackHandler : MonoBehaviour
 {
     private static readonly int FirstCrack = Animator.StringToHash("FirstCrack");
     private static readonly int SecondCrack = Animator.StringToHash("SecondCrack");
+    private static readonly int Death = Animator.StringToHash("Death");
     [SerializeField] private HealthManager bossHealthManager;
     [SerializeField] private Animator crackAnimator;
+    [SerializeField] private Animator bossAnimator;
+    
 
     public static event Action FirstCrackEvent;
     public static event Action SecondCrackEvent;
 
     private bool _firstCrackTriggered;
     private bool _secondCrackTriggered;
+    private bool _bossDead;
 
     private void Update()
     {
@@ -28,6 +32,14 @@ public class CrackHandler : MonoBehaviour
             SecondCrackEvent?.Invoke();
             crackAnimator.SetTrigger(SecondCrack);
             _secondCrackTriggered = true;
+        }
+        else if (bossHealthManager.CurrentHealth <= 0f && !_bossDead)
+        {
+            _bossDead = true;
+            //turn off the animator
+            //play the death animation
+            bossAnimator.Play(Death);
+            gameObject.SetActive(false);
         }
     }
 }

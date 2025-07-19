@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackState
 {
-
     protected AttackContainer Container;
     protected AttackStateMachine StateMachine;
     protected AttackData PlayerAttackData;
@@ -15,7 +14,8 @@ public class AttackState
     protected Transform[] SpawnPoints;
 
     private string _animBoolName;
-    
+    private bool _isPlayerDead;
+
     public AttackState(AttackContainer container, AttackStateMachine stateMachine, AttackData attackData, string animBoolName, RuntimeAnimatorController stateAnimatorController, Transform[] spawnPoints)
     {
         StateMachine = stateMachine;
@@ -25,88 +25,91 @@ public class AttackState
         AnimatorController = stateAnimatorController;
         SpawnPoints = spawnPoints;
     }
-    
+
     public virtual void Enter()
     {
         Container.AttackAnimator.runtimeAnimatorController = AnimatorController;
-        // Trigger the attack animation
-
         DoChecks();
-        
         CanPlayOtherAnims = false;
-        Container.AttackAnimator.Play($"transform");
-        
+        _isPlayerDead = false;
+        Container.AttackAnimator.Play("transform");
+
         PlayerMoveState.PlayerMove += OnPlayerMove;
         PlayerIdleState.PlayerIdle += OnPlayerIdle;
         PlayerJumpState.PlayerJump += OnPlayerJump;
         PlayerInAirState.PlayerInAir += OnPlayerInAir;
         PlayerDashState.PlayerDash += OnPlayerDash;
-        
-    }
-    
-
-    protected virtual void OnPlayerIdle()
-    {
-        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
-            Container.AttackAnimator.Play($"idle");
-    }
-
-    protected virtual void OnPlayerMove()
-    {
-        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
-            Container.AttackAnimator.Play($"idle");
-        
-    }
-
-    protected virtual void OnPlayerJump()
-    {
-        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
-        {
-            Debug.Log("Playing jump animation");
-            Container.AttackAnimator.Play($"jump");
-        }
-    }
-
-    protected virtual void OnPlayerInAir()
-    {
-        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
-            Container.AttackAnimator.Play($"fall");
-    }
-
-    protected virtual void OnPlayerDash()
-    {
-        if (CanPlayOtherAnims && !Container.InputHandler.ShootInput)
-            Container.AttackAnimator.Play($"dash");
-    }
-
-    public virtual void AnimationFinishTrigger()
-    {
-        CanPlayOtherAnims = true;
-        Container.AttackAnimator.Play($"idle");
+        PlayerHealthEvents.PlayerDeathEvent += OnPlayerDeath;
     }
 
     public virtual void Exit()
     {
-        CanPlayOtherAnims = false;
         PlayerMoveState.PlayerMove -= OnPlayerMove;
         PlayerIdleState.PlayerIdle -= OnPlayerIdle;
         PlayerJumpState.PlayerJump -= OnPlayerJump;
         PlayerInAirState.PlayerInAir -= OnPlayerInAir;
         PlayerDashState.PlayerDash -= OnPlayerDash;
+        CanPlayOtherAnims = false;
+    }
+
+    protected virtual void OnPlayerDeath()
+    {
+        _isPlayerDead = true;
+        CanPlayOtherAnims = false;
+        Container.AttackAnimator.Play("Death");
+    }
+
+    protected virtual void OnPlayerIdle()
+    {
+        if (_isPlayerDead || !CanPlayOtherAnims || Container.InputHandler.ShootInput) return;
+        Container.AttackAnimator.Play("idle");
+    }
+
+    protected virtual void OnPlayerMove()
+    {
+        if (_isPlayerDead || !CanPlayOtherAnims || Container.InputHandler.ShootInput) return;
+        Container.AttackAnimator.Play("idle");
+    }
+
+    protected virtual void OnPlayerJump()
+    {
+        if (_isPlayerDead || !CanPlayOtherAnims || Container.InputHandler.ShootInput) return;
+        Container.AttackAnimator.Play("jump");
+    }
+
+    protected virtual void OnPlayerInAir()
+    {
+        if (_isPlayerDead || !CanPlayOtherAnims || Container.InputHandler.ShootInput) return;
+        Container.AttackAnimator.Play("fall");
+    }
+
+    protected virtual void OnPlayerDash()
+    {
+        if (_isPlayerDead || !CanPlayOtherAnims || Container.InputHandler.ShootInput) return;
+        Container.AttackAnimator.Play("dash");
+    }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        if (_isPlayerDead) return;
+        CanPlayOtherAnims = true;
+        Container.AttackAnimator.Play("idle");
     }
 
     protected void ActivateShooting()
     {
+        if (_isPlayerDead) return;
         var stateInfo = Container.AttackAnimator.GetCurrentAnimatorStateInfo(0);
         if (!stateInfo.IsName("shoot"))
         {
-            Container.AttackAnimator.Play($"shoot");
+            Container.AttackAnimator.Play("shoot");
             ShootFlag = true;
         }
     }
-    
+
     public virtual void LogicUpdate()
     {
+        if (_isPlayerDead) return;
         if (Container.InputHandler.ShootInput)
             ActivateShooting();
         else if (CanPlayOtherAnims && ShootFlag)
@@ -114,23 +117,20 @@ public class AttackState
             Container.AttackAnimator.Play("idle");
             ShootFlag = false;
         }
-        
     }
-    
+
     public virtual void PhysicsUpdate()
     {
         DoChecks();
-        // Physics-related updates for the state
     }
-    
+
     protected virtual void DoChecks()
     {
         // Perform checks relevant to the state
     }
-    
+
     public virtual void AnimationTrigger()
     {
         // Handle animation triggers if needed
     }
-
 }

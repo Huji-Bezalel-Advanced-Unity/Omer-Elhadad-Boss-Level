@@ -8,6 +8,9 @@ TagManager:
   - Enemy Hitbox
   - Large Projectile
   - Small Projectile
+  - Wall
+  - WaterPulse
+  - Enemy Attack
   layers:
   - Default
   - TransparentFX

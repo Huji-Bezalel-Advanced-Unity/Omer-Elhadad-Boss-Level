@@ -40,9 +40,6 @@ public class HealthManager : MonoBehaviour
     
     private void OnDeath()
     {
-        // Handle death logic here, e.g., play death animation, disable character, etc.
-        //Debug.Log("Character has died.");
-        // You can also trigger any death-related events or animations here.
+        gameObject.SetActive(false);
     }
-    
 }

@@ -85,8 +85,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftAndRightWaterPulses:
-  - {fileID: 1345375877278674312, guid: 6d28f9858502113449d0762a58eeab26, type: 3}
-  - {fileID: 6789645603062599751, guid: 481280a7664094f4496f154c7954cb4d, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1102 &-6549982296901507395
 AnimatorState:
   serializedVersion: 6
@@ -700,6 +700,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -4860502858334049447}
     m_Position: {x: -200, y: 540, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4683080731441899019}
+    m_Position: {x: 400, y: 300, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -710,6 +713,32 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -1005125940240546915}
+--- !u!1102 &4683080731441899019
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Death
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 544ab336fbf24b74180ca85aae2c8e7d, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!114 &5552070642981372924
 MonoBehaviour:
   m_ObjectHideFlags: 1

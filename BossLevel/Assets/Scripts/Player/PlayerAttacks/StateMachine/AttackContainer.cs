@@ -38,8 +38,6 @@ public class AttackContainer : MonoBehaviour
         StateMachine = new AttackStateMachine();
         SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform", smallAttackAnimatorController, smallAttackSpawnPoints);
         LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform", largeAttackAnimatorController, largeAttackSpawnPoints);
-        
-        // Initialize states here, similar to PlayerStateMachine
 
     }
     

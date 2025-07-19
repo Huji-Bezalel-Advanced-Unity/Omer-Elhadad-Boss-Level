@@ -34,7 +34,7 @@ public class PoolableCanonBall : MonoBehaviour, IPoolable
 
         if (rb.linearVelocity.y < 0f && sortingGroup.sortingOrder == -1)
         {
-            sortingGroup.sortingOrder = 2;
+            sortingGroup.sortingOrder = 4;
         }
     }
 

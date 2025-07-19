@@ -266,9 +266,9 @@ GameObject:
   - component: {fileID: 4397628383298246955}
   - component: {fileID: 4739818652331330913}
   - component: {fileID: 4625292073215543057}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Zombie Hitbox
-  m_TagString: Untagged
+  m_TagString: Enemy Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     
     public PlayerDashState DashState { get; private set; }
     
+    public PlayerDeathState DeathState { get; private set; }
+    
     #endregion
 
     #region Player Components
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     #region Unity Callbacks
     private void Awake()
     {
+        
         InputHandler = GetComponent<PlayerInputHandler>();
         PlayerRigidbody = GetComponent<Rigidbody2D>();
         PlayerAnimator = GetComponent<Animator>();
@@ -57,6 +60,10 @@ public class PlayerController : MonoBehaviour
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "fall");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
         DashState = new PlayerDashState(this, StateMachine, playerData, "dash");
+        DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
+        
+        // Initialize states
+        PlayerHealthEvents.PlayerDeathEvent += () => StateMachine.ChangeState(DeathState);
     }
     
     private void Start()
