@@ -57,6 +57,7 @@ public class AttackState
     {
         _isPlayerDead = true;
         CanPlayOtherAnims = false;
+        
         Container.AttackAnimator.Play("Death");
     }
 

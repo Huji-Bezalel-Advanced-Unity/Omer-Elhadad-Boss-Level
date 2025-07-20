@@ -39,7 +39,13 @@ public class AttackContainer : MonoBehaviour
         LargeAttackState = new LargeAttackState(this, StateMachine, attackData, "transform", largeAttackAnimatorController, largeAttackSpawnPoints);
 
     }
-    
+
+    private void OnDisable()
+    {
+        SmallAttackState.Exit();
+        LargeAttackState.Exit();
+    }
+
     private void Start()
     {
         StateMachine.Initialize(SmallAttackState);
