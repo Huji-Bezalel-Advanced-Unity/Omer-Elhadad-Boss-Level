@@ -15,7 +15,7 @@ public class ZombieMoveBehaviour : StateMachineBehaviour
     {
         _firstStageMovement = animator.GetComponent<FirstStageMovement>();
         _playerTransform = GameObject.FindWithTag("Player").transform;
-        _zombieHealthManager = animator.GetComponent<HealthManager>();
+        _zombieHealthManager = animator.GetComponentInChildren<HealthManager>();
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

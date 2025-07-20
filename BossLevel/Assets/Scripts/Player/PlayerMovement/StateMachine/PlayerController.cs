@@ -63,9 +63,19 @@ public class PlayerController : MonoBehaviour
         DeathState = new PlayerDeathState(this, StateMachine, playerData, "death");
         
         // Initialize states
-        PlayerHealthEvents.PlayerDeathEvent += () => StateMachine.ChangeState(DeathState);
+        PlayerHealthEvents.PlayerDeathEvent += OnDeathEvent;
     }
-    
+
+    private void OnDisable()
+    {
+        PlayerHealthEvents.PlayerDeathEvent -= OnDeathEvent;
+    }
+
+    private void OnDeathEvent()
+    {
+        StateMachine.ChangeState(DeathState);
+    }
+
     private void Start()
     {
         StateMachine.Initialize(IdleState);

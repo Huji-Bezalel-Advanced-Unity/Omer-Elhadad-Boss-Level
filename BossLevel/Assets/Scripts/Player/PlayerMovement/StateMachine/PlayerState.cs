@@ -28,7 +28,6 @@ public class PlayerState
         PlayerController.PlayerAnimator.SetBool(_animBoolName, true);
         StartTime = Time.deltaTime;
         IsAnimationFinished = false;
-        // Debug.Log($"Entering state: {this.GetType().Name}");
     }
     
     public virtual void Exit()

@@ -14,6 +14,8 @@ public class CrackHandler : MonoBehaviour
 
     public static event Action FirstCrackEvent;
     public static event Action SecondCrackEvent;
+    
+    public static event Action BossDeathEvent;
 
     private bool _firstCrackTriggered;
     private bool _secondCrackTriggered;
@@ -39,6 +41,8 @@ public class CrackHandler : MonoBehaviour
             //turn off the animator
             //play the death animation
             bossAnimator.Play(Death);
+            
+            BossDeathEvent?.Invoke();
             gameObject.SetActive(false);
         }
     }

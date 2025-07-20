@@ -40,6 +40,6 @@ public class HealthManager : MonoBehaviour
     
     private void OnDeath()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 }

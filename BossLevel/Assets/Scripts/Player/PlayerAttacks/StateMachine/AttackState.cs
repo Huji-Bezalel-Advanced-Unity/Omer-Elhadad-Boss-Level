@@ -49,6 +49,7 @@ public class AttackState
         PlayerJumpState.PlayerJump -= OnPlayerJump;
         PlayerInAirState.PlayerInAir -= OnPlayerInAir;
         PlayerDashState.PlayerDash -= OnPlayerDash;
+        PlayerHealthEvents.PlayerDeathEvent -= OnPlayerDeath;
         CanPlayOtherAnims = false;
     }
 

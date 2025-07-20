@@ -33,7 +33,6 @@ public class AttackContainer : MonoBehaviour
     
     private void Awake()
     {
-       
         AttackAnimator = GetComponent<Animator>();
         StateMachine = new AttackStateMachine();
         SmallAttackState = new SmallAttackState(this, StateMachine, attackData, "transform", smallAttackAnimatorController, smallAttackSpawnPoints);

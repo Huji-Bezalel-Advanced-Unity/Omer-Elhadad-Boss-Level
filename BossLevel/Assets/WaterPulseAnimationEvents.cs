@@ -11,6 +11,7 @@ public class WaterPulseAnimationEvents : MonoBehaviour
         WaterPulseBehaviour.WaterPulseActivated += OnWaterPulseActivated;
         gameObject.SetActive(false);
     }
+    
 
     public void EndAnimationEvent()
     {

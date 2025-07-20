@@ -26,16 +26,6 @@ public class PlayerDashState : PlayerAbilityState
         base.Enter();
     }
     
-    
-    //
-    // public override void LogicUpdate()
-    // {
-    //     if (Player.CheckIfGrounded())
-    //         StateMachine.ChangeState(Player.IdleState);
-    //     else
-    //         StateMachine.ChangeState(Player.InAirState);
-    // }
-    
     public override void PhysicsUpdate()
     {
         var dashVelocity = new Vector2(PlayerData.dashSpeed * PlayerController.FacingDirection, 0f);
