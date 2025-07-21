@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class ZombieMoveBehaviour : StateMachineBehaviour
 {
+    #region Animation Hashes
     private static readonly int Death = Animator.StringToHash("Death");
+    #endregion
 
+    #region Zombie Movement Settings
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float deathDistance = 0.5f; // Distance threshold for death
-
+    #endregion
+    
     private FirstStageMovement _firstStageMovement;
     private Transform _playerTransform;
     private HealthManager _zombieHealthManager;

@@ -1,10 +1,6 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// A generic Singleton class for MonoBehaviours.
-/// Example usage: public class GameManager : MonoSingleton<GameManager>
-/// </summary>
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;

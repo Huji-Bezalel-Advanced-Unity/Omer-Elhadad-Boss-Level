@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
@@ -6,7 +5,12 @@ public class HealthManager : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private DamageFlash damageFlash;
-    
+    [SerializeField] private AudioSource audioSource; // Single AudioSource
+    [SerializeField] private AudioClip damageClip;    // Assign in inspector
+    [SerializeField] private AudioClip deathClip;     // Assign in inspector
+
+    private bool _isDead;
+
     public float CurrentHealth { get; private set; }
 
     private void OnEnable()
@@ -16,30 +20,25 @@ public class HealthManager : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        // Reduce current health by damage amount
         CurrentHealth -= damage;
+        if (CurrentHealth < 0) CurrentHealth = 0;
 
-        // Ensure current health does not drop below zero
-        if (CurrentHealth < 0)
+        if (damageFlash != null) damageFlash.CallDamageFlash();
+
+        if (audioSource != null && damageClip != null)
         {
-            CurrentHealth = 0;
+            audioSource.clip = damageClip;
+            audioSource.Play();
         }
 
-        // Trigger flash effect to indicate damage taken
-        if (damageFlash != null)
-        {
-            damageFlash.CallDamageFlash();
-        }
-
-        // Check if health has reached zero
-        if (CurrentHealth <= 0)
-        {
-            OnDeath();
-        }
+        if (CurrentHealth <= 0) OnDeath();
     }
-    
+
     private void OnDeath()
     {
-        //gameObject.SetActive(false);
+        if (audioSource == null || deathClip == null || _isDead) return;
+        _isDead = true;
+        audioSource.clip = deathClip;
+        audioSource.Play();
     }
 }

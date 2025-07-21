@@ -4,7 +4,9 @@ using Random = UnityEngine.Random;
 
 public class WaterPulseBehaviour : StateMachineBehaviour
 {
+    #region Animation Hashes
     private static readonly int Idle = Animator.StringToHash("Idle");
+    #endregion
     public enum WaterPulseSide
     {
         Left,

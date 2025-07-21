@@ -3,19 +3,29 @@ using UnityEngine;
 
 public class CanonBallSpawner : MonoBehaviour
 {
-    [SerializeField] private float minSpawnInterval = 0.2f;
+    #region Canon Ball Spawner Settings
+    [SerializeField] private float minSpawnInterval = 0.4f;
     [SerializeField] private float maxSpawnInterval = 1.0f;
+    #endregion
 
     private Coroutine _spawningCoroutine;
 
     private void OnEnable()
     {
         ThrowBehaviour.ThrowEvent += OnThrowEvent;
+        HealthEventManager.FirstCrackEvent += OnCrackEvent;
+        HealthEventManager.SecondCrackEvent += OnCrackEvent;
     }
 
     private void OnDisable()
     {
         ThrowBehaviour.ThrowEvent -= OnThrowEvent;
+    }
+    
+    private void OnCrackEvent()
+    {
+        maxSpawnInterval /= 2;
+        minSpawnInterval /= 2;
     }
 
     private void OnThrowEvent(float duration)

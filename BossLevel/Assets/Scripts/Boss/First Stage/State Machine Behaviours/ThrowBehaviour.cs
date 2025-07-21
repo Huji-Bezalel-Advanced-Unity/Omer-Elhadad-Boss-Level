@@ -4,7 +4,9 @@ using Random = UnityEngine.Random;
 
 public class ThrowBehaviour : StateMachineBehaviour
 {
+    #region Animation Hashes
     private static readonly int Idle = Animator.StringToHash("Idle");
+    #endregion
     
     private float _throwTimer;
     public static event Action<float> ThrowEvent;

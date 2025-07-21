@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class MoveBehaviour : StateMachineBehaviour
 {
+    #region Animation Hashes
     private static readonly int Idle = Animator.StringToHash("Idle");
+    #endregion
     
+    #region Move Settings
     [SerializeField] private float moveSpeed = 2f; // Speed at which the object moves towards the player
+    #endregion
+    
     private float _randomMoveTime;
     private FirstStageMovement _firstStageMovement;
     private Transform _playerTransform;

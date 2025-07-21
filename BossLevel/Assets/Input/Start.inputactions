@@ -1,0 +1,34 @@
+{
+    "name": "Start",
+    "maps": [
+        {
+            "name": "Start",
+            "id": "31600455-b0b8-4895-8c8c-db0bfa499d21",
+            "actions": [
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "09ccc8b5-3776-48fd-b916-60f584caa837",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a4b3b92e-c974-4f3e-8e88-875259ede36e",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

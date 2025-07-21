@@ -3,10 +3,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 public class IdleBehaviour : StateMachineBehaviour
 {
+    #region Animation Hashes
     private static readonly int Move = Animator.StringToHash("Move");
     private static readonly int Throw = Animator.StringToHash("Throw");
     private static readonly int Fire = Animator.StringToHash("Fire");
     private static readonly int Water = Animator.StringToHash("Water");
+    #endregion
 
     private float _idleTimer = 1f;
     private BossStateAction _randomAction;
@@ -14,18 +16,15 @@ public class IdleBehaviour : StateMachineBehaviour
 
     private void Awake()
     {
-        CrackHandler.FirstCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
-        CrackHandler.SecondCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
+        HealthEventManager.FirstCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
+        HealthEventManager.SecondCrackEvent += UpdateCrack; // Subscribe to the event to update cracks
     }
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        CrackHandler.FirstCrackEvent += UpdateCrack;
-        
         _currentCrack = Mathf.Clamp(_currentCrack, 2, 4);
-        _idleTimer = Random.Range(0.8f, 2f);
+        _idleTimer = Random.Range(0.8f/_currentCrack, 2f/_currentCrack);
         var values = (BossStateAction[])System.Enum.GetValues(typeof(BossStateAction));
-        Debug.Log("Current Crack: " + _currentCrack);
         _randomAction = values[Random.Range(0, _currentCrack)];
     }
 

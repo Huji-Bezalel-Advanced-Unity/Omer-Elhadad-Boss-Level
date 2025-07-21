@@ -9,7 +9,6 @@ public class DeathBehaviour : StateMachineBehaviour
         _poolableZombie = animator.GetComponent<PoolableZombie>();
     }
     
-
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _poolableZombie.OnDeathEvent();
