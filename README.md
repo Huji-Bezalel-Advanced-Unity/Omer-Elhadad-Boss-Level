@@ -1,7 +1,3 @@
-Absolutely — here’s the revised, professional-style `README.md` text with the phase system and attack details included clearly and naturally:
-
----
-
 # Holy Spit
 
 **Holy Spit** is a fast-paced 2D boss fight game developed in Unity. Inspired by games like *Cuphead*, it delivers a short but intense challenge focused on dodging, timing, and well-placed spit attacks. You play as a Moroccan fighter standing up to a monstrous hot pepper plant — an exaggerated version of the pain he's endured every family dinner.
@@ -79,9 +75,7 @@ https://omerelhadad.itch.io/holy-spit
 I'm planning on expanding this fight with more polish, additional attack patterns, and possibly extra phases.
 If you have thoughts, ideas, or find bugs — feel free to open an issue or reach out.
 
----
 
-Let me know if you'd like me to add:
 
 * A **technical section** explaining the phase transitions or projectile system
 * A **DevLog** template
