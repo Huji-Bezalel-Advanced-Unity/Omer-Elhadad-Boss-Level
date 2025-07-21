@@ -65,8 +65,11 @@ Visual changes in the boss (such as cracks forming) help signal danger and build
 
 ## Play the Game
 
-You can play *Holy Spit* here:
+Play *Holy Spit* Here:
 https://omerelhadad.itch.io/holy-spit
+
+Watch *Holy Spit's* Gameplay Here: 
+https://youtu.be/u7xUO0dFwYY
 
 ---
 
